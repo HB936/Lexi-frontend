@@ -86,13 +86,13 @@ export default function Pdf({ pdfData, onClose }) {
         {/* Header */}
         <div className="flex flex-wrap justify-between items-center p-4 border-b bg-gray-100 rounded-t-xl gap-2">
           <div className="flex flex-wrap items-center gap-4">
-            <span className="font-semibold">PDF Viewer</span>
+            <span className="font-semibold text-gray-600">PDF Viewer</span>
             <div className="flex items-center gap-2 text-sm">
               <span className="text-gray-600">Viewer:</span>
               <select
                 value={viewerType}
                 onChange={(e) => setViewerType(e.target.value)}
-                className="px-2 py-1 border rounded text-sm"
+                className="px-2 py-1 border rounded text-sm border-black text-gray-600"
               >
                 <option value="native">Native</option>
                 <option value="pdfjs">PDF.js</option>
@@ -100,32 +100,7 @@ export default function Pdf({ pdfData, onClose }) {
               </select>
             </div>
 
-            {viewerType !== 'google' && (
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                  className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
-                >
-                  ← Prev
-                </button>
-                <input
-                  type="number"
-                  value={currentPage}
-                  onChange={(e) => {
-                    const page = parseInt(e.target.value);
-                    if (page > 0) setCurrentPage(page);
-                  }}
-                  className="w-16 px-2 py-1 border rounded text-center text-sm"
-                  min="1"
-                />
-                <button
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
-                >
-                  Next →
-                </button>
-              </div>
-            )}
+            
 
             {viewerType === 'google' && (
               <span className="text-sm text-gray-600">
