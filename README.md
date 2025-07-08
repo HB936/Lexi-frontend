@@ -1,6 +1,6 @@
 # Lexisg-frontend-intern-test
 
-A minimal **Lexi-style legal assistant interface**, built with **Vite + React + Tailwind CSS**. It allows users to ask legal queries, view AI-generated answers with citations, and open cited PDFs in a popup.
+A minimal **ChatGpt-style legal assistant interface**, built with **Vite + React + Tailwind CSS**. It allows users to ask legal queries, view AI-generated answers with citations, and open cited PDFs in a popup.
 
 This project simulates how Lexi links legal answers back to original source documents.
 
