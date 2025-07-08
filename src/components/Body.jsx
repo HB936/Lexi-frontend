@@ -67,7 +67,7 @@ export default function Body() {
                                 {citation.text}
                                 <button
                                     onClick={() => setPdfData({ url: citation.link, page: citation.page })}
-                                    className="underline text-blue-400 ml-1 break-all"
+                                    className="underline text-blue-400 ml-1 break-all cursor-pointer"
                                 >
                                     {citation.source}
                                 </button>
