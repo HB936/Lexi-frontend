@@ -7,7 +7,7 @@ export default function Body() {
     const [chatHistory, setChatHistory] = useState([]);
     const [pendingQuery, setPendingQuery] = useState(null);
     const { query } = useContext(Context);
-    const [pdfData, setPdfData] = useState(null); // Changed from pdfUrl to pdfData
+    const [pdfData, setPdfData] = useState(null);
 
     useEffect(() => {
         if (!query) return;
@@ -15,7 +15,7 @@ export default function Body() {
         setPendingQuery(query);
         setLoading(true);
 
-        const currentQuery = query; // ✅ Capture query in closure
+        const currentQuery = query;
 
         setTimeout(() => {
             const simulatedAPIResponse = {
@@ -24,10 +24,10 @@ export default function Body() {
                 citations: [
                     {
                         text:
-                            "as the age of the deceased at the time of accident was held to be about 54–55 years by the learned Tribunal, being self-employed, as such, 10% of annual income should have been awarded on account of future prospects. (Para 7)",
+                            "as the age of the deceased at the time of accident was held to be about 54–55 years by the learned Tribunal, being self-employed, as such, 10% of annual income should have been awarded on account of future prospects.",
                         source: "Dani_Devi_v_Pritam_Singh.pdf",
                         link: "/Dani.pdf",
-                        page: 7, // 👈 ADD PAGE NUMBER
+                        page: 1,
                     },
                 ],
             };
@@ -47,6 +47,12 @@ export default function Body() {
 
     return (
         <div className="flex-1 overflow-y-auto bg-[#212121] p-4 text-white max-w-[1250px] w-full mx-auto space-y-4">
+
+            {/* Show message when nothing has been asked yet */}
+            {chatHistory.length === 0 && !pendingQuery && (
+                <div className="text-center text-gray-400 mt-20 text-lg">Start Typing...</div>
+            )}
+
             {chatHistory.map((chat, index) => (
                 <div key={index}>
                     <div className="flex justify-end mb-2">
@@ -60,7 +66,7 @@ export default function Body() {
                             <div key={i} className="text-sm text-gray-400 mt-2">
                                 {citation.text}
                                 <button
-                                    onClick={() => setPdfData({ url: citation.link, page: citation.page })} // 👈 Pass both URL and page
+                                    onClick={() => setPdfData({ url: citation.link, page: citation.page })}
                                     className="underline text-blue-400 ml-1"
                                 >
                                     {citation.source}
@@ -70,11 +76,9 @@ export default function Body() {
                     </div>
                 </div>
             ))}
-            
-            {/* Updated to pass pdfData object */}
+
             {pdfData && <Pdf pdfData={pdfData} onClose={() => setPdfData(null)} />}
 
-            {/* Show current pending query being processed */}
             {pendingQuery && (
                 <>
                     <div className="flex justify-end mb-2">{pendingQuery}</div>
