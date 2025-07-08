@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function Pdf({ pdfData, onClose }) {
   const [currentPage, setCurrentPage] = useState(pdfData?.page || 1);
-  const [viewerType, setViewerType] = useState('native'); // 'native', 'pdfjs', 'google'
+  const [viewerType, setViewerType] = useState('pdfjs'); // 'native', 'pdfjs', 'google'
   const [error, setError] = useState(null);
 
   const getAbsoluteUrl = (url) => {
