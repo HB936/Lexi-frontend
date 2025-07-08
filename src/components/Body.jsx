@@ -46,8 +46,8 @@ export default function Body() {
     }, [query]);
 
     return (
-        <div className="flex-1 overflow-y-auto bg-[#212121] p-4 text-white max-w-[1250px] w-full mx-auto space-y-4">
-
+        <div className="flex-1 overflow-y-auto bg-[#212121] p-3 sm:p-4 text-white w-full max-w-[1250px] mx-auto space-y-4">
+            
             {/* Show message when nothing has been asked yet */}
             {chatHistory.length === 0 && !pendingQuery && (
                 <div className="text-center text-gray-400 mt-20 text-lg">Start Typing...</div>
@@ -56,7 +56,7 @@ export default function Body() {
             {chatHistory.map((chat, index) => (
                 <div key={index}>
                     <div className="flex justify-end mb-2">
-                        <div className="max-w-[700px] bg-[#303030] p-4 rounded-xl mb-10 wrap-anywhere">
+                        <div className="max-w-[700px] bg-[#303030] p-4 rounded-xl mb-10 break-words">
                             {chat.query}
                         </div>
                     </div>
@@ -67,7 +67,7 @@ export default function Body() {
                                 {citation.text}
                                 <button
                                     onClick={() => setPdfData({ url: citation.link, page: citation.page })}
-                                    className="underline text-blue-400 ml-1"
+                                    className="underline text-blue-400 ml-1 break-all"
                                 >
                                     {citation.source}
                                 </button>
@@ -81,7 +81,7 @@ export default function Body() {
 
             {pendingQuery && (
                 <>
-                    <div className="flex justify-end mb-2">{pendingQuery}</div>
+                    <div className="flex justify-end mb-2 break-words">{pendingQuery}</div>
                     <div className="flex justify-start text-gray-400">...</div>
                 </>
             )}

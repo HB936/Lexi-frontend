@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 export default function Pdf({ pdfData, onClose }) {
   const [currentPage, setCurrentPage] = useState(pdfData?.page || 1);
   const [viewerType, setViewerType] = useState('native'); // 'native', 'pdfjs', 'google'
   const [error, setError] = useState(null);
-  
-  // Convert relative URL to absolute with proper error handling
+
   const getAbsoluteUrl = (url) => {
     if (!url || typeof url !== 'string') {
       throw new Error('Invalid URL provided');
@@ -14,11 +13,10 @@ export default function Pdf({ pdfData, onClose }) {
     return `${window.location.origin}${url}`;
   };
 
-  // Early return if no valid PDF data - prevents the error from happening
   if (!pdfData || !pdfData.url || typeof pdfData.url !== 'string') {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
-        <div className="relative w-[95%] h-[95%] bg-white rounded-xl shadow-lg flex flex-col items-center justify-center">
+      <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center px-2">
+        <div className="relative w-full max-w-4xl h-[90%] bg-white rounded-xl shadow-lg flex flex-col items-center justify-center">
           <div className="text-center p-8">
             <div className="text-red-500 text-6xl mb-4">⚠️</div>
             <h2 className="text-xl font-bold text-gray-800 mb-2">Error Loading PDF</h2>
@@ -35,7 +33,6 @@ export default function Pdf({ pdfData, onClose }) {
     );
   }
 
-  // Handle viewer fallback
   const handleViewerError = () => {
     if (viewerType === 'native') {
       setViewerType('pdfjs');
@@ -46,11 +43,10 @@ export default function Pdf({ pdfData, onClose }) {
     }
   };
 
-  // Show error state
   if (error) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
-        <div className="relative w-[95%] h-[95%] bg-white rounded-xl shadow-lg flex flex-col items-center justify-center">
+      <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center px-2">
+        <div className="relative w-full max-w-4xl h-[90%] bg-white rounded-xl shadow-lg flex flex-col items-center justify-center">
           <div className="text-center p-8">
             <div className="text-red-500 text-6xl mb-4">⚠️</div>
             <h2 className="text-xl font-bold text-gray-800 mb-2">Error Loading PDF</h2>
@@ -70,7 +66,7 @@ export default function Pdf({ pdfData, onClose }) {
   let pdfUrl;
   try {
     const absoluteUrl = getAbsoluteUrl(pdfData.url);
-    
+
     if (viewerType === 'native') {
       pdfUrl = `${absoluteUrl}#page=${currentPage}&zoom=FitH&toolbar=1`;
     } else if (viewerType === 'pdfjs') {
@@ -84,13 +80,14 @@ export default function Pdf({ pdfData, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
-      <div className="relative w-[95%] h-[95%] bg-white rounded-xl shadow-lg flex flex-col">
-        {/* Header with controls */}
-        <div className="flex justify-between items-center p-4 border-b bg-gray-100 rounded-t-xl">
-          <div className="flex items-center space-x-4">
+    <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center px-2">
+      <div className="relative w-full max-w-[95%] h-[95%] bg-white rounded-xl shadow-lg flex flex-col">
+        
+        {/* Header */}
+        <div className="flex flex-wrap justify-between items-center p-4 border-b bg-gray-100 rounded-t-xl gap-2">
+          <div className="flex flex-wrap items-center gap-4">
             <span className="font-semibold">PDF Viewer</span>
-            <div className="flex items-center space-x-2 text-sm">
+            <div className="flex items-center gap-2 text-sm">
               <span className="text-gray-600">Viewer:</span>
               <select
                 value={viewerType}
@@ -102,9 +99,9 @@ export default function Pdf({ pdfData, onClose }) {
                 <option value="google">Google Docs</option>
               </select>
             </div>
-            
+
             {viewerType !== 'google' && (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
@@ -116,9 +113,7 @@ export default function Pdf({ pdfData, onClose }) {
                   value={currentPage}
                   onChange={(e) => {
                     const page = parseInt(e.target.value);
-                    if (page > 0) {
-                      setCurrentPage(page);
-                    }
+                    if (page > 0) setCurrentPage(page);
                   }}
                   className="w-16 px-2 py-1 border rounded text-center text-sm"
                   min="1"
@@ -131,15 +126,15 @@ export default function Pdf({ pdfData, onClose }) {
                 </button>
               </div>
             )}
-            
+
             {viewerType === 'google' && (
               <span className="text-sm text-gray-600">
                 Target Page: {pdfData?.page || 1} (Use viewer controls to navigate)
               </span>
             )}
           </div>
-          
-          <div className="flex items-center space-x-2">
+
+          <div className="flex items-center gap-2">
             <button
               onClick={handleViewerError}
               className="px-3 py-1 bg-orange-500 text-white rounded hover:bg-orange-600 text-sm"
@@ -148,14 +143,14 @@ export default function Pdf({ pdfData, onClose }) {
             </button>
             <button
               onClick={onClose}
-              className="text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600"
+              className="text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600 text-sm"
             >
               Close
             </button>
           </div>
         </div>
 
-        {/* PDF Viewer */}
+        {/* Viewer */}
         <div className="flex-1 overflow-hidden">
           {viewerType === 'native' ? (
             <object

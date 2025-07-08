@@ -6,17 +6,17 @@ function App() {
   return (
     <div className="h-screen flex flex-col bg-[#121212]">
       {/* Fixed Header */}
-      <div className="shrink-0">
+      <div className="shrink-0 w-full">
         <Header />
       </div>
 
       {/* Scrollable Body */}
-      <div className="flex-1 overflow-y-auto bg-[#212121] scrollbar-custom">
+      <div className="flex-1 overflow-y-auto bg-[#212121] scrollbar-custom w-full">
         <Body />
       </div>
 
       {/* Fixed Input */}
-      <div className="shrink-0 bg-[#212121]">
+      <div className="shrink-0 bg-[#212121] w-full">
         <InputQuery />
       </div>
     </div>

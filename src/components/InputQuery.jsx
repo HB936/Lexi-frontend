@@ -20,19 +20,19 @@ export default function InputQuery() {
     };
 
     return (
-        <div className="p-4 bg-[#303030] text-white w-[1250px] mx-auto rounded-2xl mb-7 relative">
+        <div className="p-3 sm:p-4 bg-[#303030] text-white w-full max-w-[1250px] mx-auto rounded-2xl mb-7 relative">
             <input
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                onKeyDown={handleKeyDown} // ⬅️ Added for Enter key
-                className='placeholder-gray-200 w-full p-2 pe-10 border-none outline-none'
+                onKeyDown={handleKeyDown}
+                className='placeholder-gray-200 w-full p-2 pe-10 border-none outline-none text-sm sm:text-base'
                 type="text"
                 placeholder='Ask Anything'
             />
             <button
                 onClick={submitHandler}
                 disabled={text.trim() === ""}
-                className={`absolute text-[35px] ${text === '' ? 'text-gray-400' : 'cursor-pointer'} top-1/2 right-4 -translate-y-1/2`}
+                className={`absolute text-[30px] sm:text-[35px] ${text === '' ? 'text-gray-400' : 'cursor-pointer'} top-1/2 right-4 -translate-y-1/2`}
             >
                 <FaCircleArrowUp />
             </button>
