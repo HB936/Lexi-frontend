@@ -4,7 +4,7 @@ import Body from './components/Body';
 
 function App() {
   return (
-    <div className="flex flex-col bg-[#121212] min-h-screen max-h-screen overflow-hidden">
+    <div className="fixed inset-0 flex flex-col bg-[#121212]">
       {/* Fixed Header */}
       <div className="shrink-0 w-full">
         <Header />
